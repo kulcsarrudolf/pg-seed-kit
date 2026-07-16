@@ -1,0 +1,13 @@
+# Normalize line endings: store LF in the repo, check out LF on every platform.
+* text=auto eol=lf
+
+# Keep binary files binary (explicit just in case `text=auto` ever guesses wrong).
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.tgz binary
