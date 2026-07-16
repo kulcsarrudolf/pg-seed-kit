@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kulcsarrudolf.github.io/pg-seed-kit/sitemap.xml
