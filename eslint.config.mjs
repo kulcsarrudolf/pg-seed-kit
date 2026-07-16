@@ -3,7 +3,7 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default tseslint.config(
   {
-    ignores: ['dist/**', 'build/**', 'bin/**', 'node_modules/**', 'tests/**/fixtures/**'],
+    ignores: ['dist/**', 'build/**', 'bin/**', 'docs/**', 'node_modules/**', 'tests/**/fixtures/**'],
   },
   ...tseslint.configs.recommended,
   eslintConfigPrettier,
