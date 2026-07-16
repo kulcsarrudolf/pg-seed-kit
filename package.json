@@ -20,9 +20,11 @@
   ],
   "scripts": {
     "build": "tsup",
+    "pretest": "tsc -p tests && node scripts/write-build-cjs.mjs",
+    "test": "mocha",
     "lint": "eslint .",
-    "format": "prettier --write 'src/**/*.ts'",
-    "format:check": "prettier --check 'src/**/*.ts'",
+    "format": "prettier --write 'src/**/*.ts' 'tests/**/*.ts'",
+    "format:check": "prettier --check 'src/**/*.ts' 'tests/**/*.ts'",
     "prepare": "husky",
     "prepack": "npm run build",
     "release": "bash scripts/release.sh"
@@ -58,11 +60,20 @@
     "*.ts": "prettier --write"
   },
   "devDependencies": {
+    "@testcontainers/postgresql": "^12.0.4",
+    "@types/chai": "^4.3.20",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^26.1.1",
+    "@types/pg": "^8.20.0",
+    "chai": "^4.5.0",
     "eslint": "^10.7.0",
     "eslint-config-prettier": "^10.1.8",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.8",
+    "mocha": "^11.7.6",
+    "pg": "^8.22.0",
     "prettier": "^3.9.5",
+    "testcontainers": "^12.0.4",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.64.0"
