@@ -19,17 +19,17 @@ npm install pg-seed-kit
 
 Your ORM is an optional peer dependency: install whichever one you already use (`@prisma/client`, `drizzle-orm`, `typeorm`, or `sequelize`).
 
-## Quick Start (Prisma)
+## Quick Start (Drizzle)
 
 Point pg-seed-kit at your seeders and tell it how to connect. Create `pg-seed-kit.config.js`:
 
 ```javascript
-import { prismaAdapter } from "pg-seed-kit/prisma";
-import { prisma } from "./db.js"; // your shared PrismaClient
+import { drizzleAdapter } from "pg-seed-kit/drizzle";
+import { db, pool } from "./db.js"; // your drizzle db + pg Pool
 
 export default {
-  seedersPath: "./prisma/seeders",
-  connect: async () => prismaAdapter(prisma),
+  seedersPath: "./src/db/seeders",
+  connect: async () => drizzleAdapter(db, { close: () => pool.end() }),
 };
 ```
 
@@ -39,17 +39,17 @@ Scaffold a seeder:
 npx pg-seed-kit create add-admin
 ```
 
-Implement the generated `prisma/seeders/20260320120000-add-admin.seeder.ts`:
+Implement the generated `src/db/seeders/20260320120000-add-admin.seeder.ts`:
 
 ```typescript
-import { prisma } from "../../db.js";
+import { db } from "../../db.js";
+import { users } from "../schema.js";
 
 const seed = async (): Promise<void> => {
-  await prisma.user.upsert({
-    where: { email: "admin@example.com" },
-    update: {},
-    create: { email: "admin@example.com", role: "admin" },
-  });
+  await db
+    .insert(users)
+    .values({ email: "admin@example.com", role: "admin" })
+    .onConflictDoNothing();
 };
 
 export default seed;
@@ -59,17 +59,17 @@ Run pending seeders, either from your app (after the ORM is connected) or via th
 
 ```typescript
 import { runPendingSeeders } from "pg-seed-kit";
-import { prismaAdapter } from "pg-seed-kit/prisma";
-import { prisma } from "./db.js";
+import { drizzleAdapter } from "pg-seed-kit/drizzle";
+import { db } from "./db.js";
 
-await runPendingSeeders({ adapter: prismaAdapter(prisma) });
+await runPendingSeeders({ adapter: drizzleAdapter(db) });
 ```
 
 ```bash
 npx pg-seed-kit run
 ```
 
-Using **Drizzle**, **TypeORM**, or **Sequelize**? The same three steps, with that ORM's adapter and idiom: see the [website](https://kulcsarrudolf.github.io/pg-seed-kit/).
+Using **Prisma**, **TypeORM**, or **Sequelize**? The same three steps, with that ORM's adapter and idiom: see the [website](https://kulcsarrudolf.github.io/pg-seed-kit/).
 
 ## How It Works
 
