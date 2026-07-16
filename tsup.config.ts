@@ -10,6 +10,7 @@ export default defineConfig({
     'adapters/sequelize': 'src/adapters/sequelize.ts',
     'adapters/prisma': 'src/adapters/prisma.ts',
     'adapters/drizzle': 'src/adapters/drizzle.ts',
+    'cli/index': 'src/cli/index.ts',
   },
   // ORMs are optional peer dependencies: never bundle them into the adapters.
   external: ['typeorm', 'sequelize', '@prisma/client', 'drizzle-orm'],
