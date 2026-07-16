@@ -6,7 +6,13 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   entry: {
     index: 'src/index.ts',
+    'adapters/typeorm': 'src/adapters/typeorm.ts',
+    'adapters/sequelize': 'src/adapters/sequelize.ts',
+    'adapters/prisma': 'src/adapters/prisma.ts',
+    'adapters/drizzle': 'src/adapters/drizzle.ts',
   },
+  // ORMs are optional peer dependencies: never bundle them into the adapters.
+  external: ['typeorm', 'sequelize', '@prisma/client', 'drizzle-orm'],
   format: ['esm', 'cjs'],
   dts: true,
   clean: true,
