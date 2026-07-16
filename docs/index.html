@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>pg-seed-kit: a zero-dependency Postgres seeder toolkit</title>
+    <meta
+      name="description"
+      content="A lightweight, zero-dependency seeder toolkit for Postgres that works with Prisma, Drizzle, TypeORM, and Sequelize."
+    />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./">
+        <span class="brand-mark">🌱</span>
+        <span class="brand-name">pg-seed-kit</span>
+      </a>
+      <nav class="site-nav">
+        <a href="#quickstart">Quick start</a>
+        <a href="#cli">CLI</a>
+        <a href="#api">API</a>
+        <a href="https://github.com/kulcsarrudolf/pg-seed-kit" target="_blank" rel="noopener">GitHub</a>
+        <a class="nav-npm" href="https://www.npmjs.com/package/pg-seed-kit" target="_blank" rel="noopener">npm</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Postgres seeding, one place, any ORM</p>
+        <h1>Seed your Postgres database with the ORM you already use.</h1>
+        <p class="lede">
+          A lightweight, <strong>zero-dependency</strong> seeder toolkit for Postgres. Track
+          one-time seed scripts, run them on startup, and manage them from a small CLI. Works with
+          Prisma, Drizzle, TypeORM, and Sequelize.
+        </p>
+        <div class="install">
+          <code>npm install pg-seed-kit</code>
+          <button class="copy-btn" data-copy="npm install pg-seed-kit" aria-label="Copy install command">Copy</button>
+        </div>
+        <div class="hero-badges">
+          <span class="badge">Zero runtime dependencies</span>
+          <span class="badge">ESM + CommonJS</span>
+          <span class="badge">TypeScript-first</span>
+        </div>
+      </section>
+
+      <section class="orm-picker" aria-label="Choose your ORM">
+        <h2 class="section-eyebrow">Choose your ORM</h2>
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" data-orm="prisma">Prisma</button>
+          <button class="tab" role="tab" data-orm="drizzle">Drizzle</button>
+          <button class="tab" role="tab" data-orm="typeorm">TypeORM</button>
+          <button class="tab" role="tab" data-orm="sequelize">Sequelize</button>
+        </div>
+      </section>
+
+      <section id="quickstart" class="steps">
+        <article class="step">
+          <div class="step-head">
+            <span class="step-num">1</span>
+            <div>
+              <h3>Configure</h3>
+              <p>Point pg-seed-kit at your seeders and tell it how to connect. <code data-config-file>pg-seed-kit.config.js</code></p>
+            </div>
+          </div>
+          <pre class="code" data-snippet="config"><code></code></pre>
+        </article>
+
+        <article class="step">
+          <div class="step-head">
+            <span class="step-num">2</span>
+            <div>
+              <h3>Write a seeder</h3>
+              <p>Scaffold one with <code>npx pg-seed-kit create add-admin</code>, then use your ORM as usual. Keep it idempotent.</p>
+            </div>
+          </div>
+          <pre class="code" data-snippet="seeder"><code></code></pre>
+        </article>
+
+        <article class="step">
+          <div class="step-head">
+            <span class="step-num">3</span>
+            <div>
+              <h3>Run</h3>
+              <p>From your app after the ORM connects, or with <code>npx pg-seed-kit run</code>.</p>
+            </div>
+          </div>
+          <pre class="code" data-snippet="run"><code></code></pre>
+        </article>
+      </section>
+
+      <section class="how">
+        <h2>How it works</h2>
+        <ol class="how-list">
+          <li>Seeder files are sorted by their timestamp prefix, so they run in order.</li>
+          <li>Each run executes only seeders without a <code>success</code> record. The tracking table (<code>seeders</code>) is created automatically.</li>
+          <li>A failed seeder is recorded and retried next run; the others keep going.</li>
+        </ol>
+      </section>
+
+      <section id="cli" class="cli">
+        <h2>CLI</h2>
+        <pre class="code static"><code><span class="c-fn">npx pg-seed-kit create</span> &lt;name&gt;    <span class="c-com"># Scaffold a new seeder file</span>
+<span class="c-fn">npx pg-seed-kit status</span>           <span class="c-com"># List seeders and statuses</span>
+<span class="c-fn">npx pg-seed-kit run</span>              <span class="c-com"># Run all pending seeders</span>
+<span class="c-fn">npx pg-seed-kit run</span> &lt;name&gt;       <span class="c-com"># Force-run one seeder by name</span>
+<span class="c-fn">npx pg-seed-kit reset</span> &lt;name&gt;     <span class="c-com"># Mark a seeder as pending</span></code></pre>
+      </section>
+
+      <section id="api" class="api">
+        <h2>API &amp; options</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Function</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>runPendingSeeders(options?)</code></td><td>Runs seeders without a successful tracking record.</td></tr>
+              <tr><td><code>runSeederByName(name, options?)</code></td><td>Force-runs one seeder, even if already executed.</td></tr>
+              <tr><td><code>getSeederStatuses(options?)</code></td><td>Lists pending, success, and failed seeders.</td></tr>
+              <tr><td><code>resetSeeder(name, options?)</code></td><td>Deletes the tracking record so a seeder can rerun.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>seedersPath</code></td><td><code>string | () =&gt; string</code></td><td>required</td><td>Directory of seeder files.</td></tr>
+              <tr><td><code>tableName</code></td><td><code>string</code></td><td><code>"seeders"</code></td><td>Tracking table name.</td></tr>
+              <tr><td><code>adapter</code></td><td><code>Adapter</code></td><td>none</td><td>Live adapter for calling the API from your app.</td></tr>
+              <tr><td><code>connect</code></td><td><code>() =&gt; Promise&lt;Adapter&gt;</code></td><td>none</td><td>Used by the CLI to open a connection.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        <a href="https://github.com/kulcsarrudolf/pg-seed-kit" target="_blank" rel="noopener">GitHub</a>
+        &middot;
+        <a href="https://www.npmjs.com/package/pg-seed-kit" target="_blank" rel="noopener">npm</a>
+        &middot; MIT License
+      </p>
+      <p class="footer-muted">Built by Kulcsár Rudolf. Zero dependencies, on purpose.</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
