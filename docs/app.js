@@ -173,7 +173,7 @@
     return out;
   }
 
-  var ORMS = ["prisma", "drizzle", "typeorm", "sequelize"];
+  var ORMS = ["drizzle", "prisma", "sequelize", "typeorm"];
   var STORAGE_KEY = "pg-seed-kit:orm";
 
   function render(orm) {
@@ -206,7 +206,7 @@
     } catch (e) {
       saved = null;
     }
-    render(ORMS.indexOf(saved) >= 0 ? saved : "prisma");
+    render(ORMS.indexOf(saved) >= 0 ? saved : "drizzle");
   }
 
   function initCopy() {
