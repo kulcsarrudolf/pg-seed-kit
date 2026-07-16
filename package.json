@@ -34,6 +34,9 @@
     },
     "./package.json": "./package.json"
   },
+  "bin": {
+    "pg-seed-kit": "./bin/pg-seed-kit.js"
+  },
   "files": [
     "dist/**",
     "bin/**"
@@ -105,6 +108,7 @@
     "@types/mocha": "^10.0.10",
     "@types/node": "^26.1.1",
     "@types/pg": "^8.20.0",
+    "@types/sinon": "^22.0.0",
     "chai": "^4.5.0",
     "drizzle-orm": "^0.45.2",
     "eslint": "^10.7.0",
@@ -114,6 +118,7 @@
     "mocha": "^11.7.6",
     "pg": "^8.22.0",
     "prettier": "^3.9.5",
+    "sinon": "^22.0.0",
     "testcontainers": "^12.0.4",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
