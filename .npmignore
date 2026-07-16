@@ -1,0 +1,24 @@
+# Source files
+src/
+
+# Tests
+tests/
+
+# Docs website
+docs/
+
+# Config files
+tsconfig.json
+tsup.config.ts
+eslint.config.mjs
+.mocharc.json
+.github/
+
+# Development files
+.git/
+.gitignore
+.vscode/
+*.log
+
+# Lockfiles
+package-lock.json
